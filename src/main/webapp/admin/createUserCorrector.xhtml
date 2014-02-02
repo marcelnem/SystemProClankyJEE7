@@ -1,33 +1,60 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-        <title>Vytvoření korektora</title>
-    </h:head>
-    <h:body>
-        <ui:include src="/WEB-INF/include.xhtml" />
-        
-        <h1>Vytvoření korektora</h1> 
+<h:head>
+    <title>Vytvoření korektora</title>
+</h:head>
+<h:body>
+    <ui:include src="/WEB-INF/include.xhtml"/>
 
-        <h:form>
-            Křestní jméno<h:inputText value="#{userCorrectorBB.firstName}"/><br/>
-            Příjmení<h:inputText value="#{userCorrectorBB.lastName}"/><br/>
-            Username<h:inputText value="#{userCorrectorBB.username}"/><br/>
-            Password<h:inputSecret value="#{userCorrectorBB.password}"/><br/>
-            Email<h:inputText value="#{userCorrectorBB.email}">
-                            <!--Validator defined using jsf's @FacesValidator and referenced by validatorId.-->
-                            <f:validator  validatorId="emailValidator"/>
-            </h:inputText><br/>
+    <div>
+
+        <h1>Vytvoření korektora</h1>
+
+        <h:form class="form-horizontal span8">
+            <table>
+                <tr>
+                    <td>Křestní jméno</td>
+                    <td><h:inputText value="#{userAdvisoryBoardMemberBB.firstName}"/></td>
+                </tr>
+                <tr>
+                    <td>Příjmení</td>
+                    <td><h:inputText value="#{userAdvisoryBoardMemberBB.lastName}"/></td>
+                </tr>
+                <tr>
+                    <td>Username</td>
+                    <td><h:inputText value="#{userAdvisoryBoardMemberBB.username}"/></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><h:inputSecret value="#{userAdvisoryBoardMemberBB.password}"/></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><h:inputText
+                            value="#{userCorrectorBB.email}"><!--Validator defined using jsf's @FacesValidator and referenced by validatorId.-->
+                        <f:validator validatorId="emailValidator"/>
+                    </h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><h:commandButton value="create" action="#{userCorrectorBB.saveUser()}"/>
+                    </td>
+
+                </tr>
+            </table>
+
+            <br/>
 
 
-            <h:commandButton value="create" action="#{userCorrectorBB.saveUser()}"/><br/>
             <h:messages showDetail="true"/>
         </h:form>
 
-
-    </h:body>
+    </div>
+</h:body>
 </html>
 

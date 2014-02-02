@@ -7,39 +7,52 @@ package eu.cvut.fel.systemproclanky3.bb;
 import eu.cvut.fel.systemproclanky3.bo.Role;
 import eu.cvut.fel.systemproclanky3.dto.UserDto;
 import eu.cvut.fel.systemproclanky3.service.UserServiceImpl;
-import java.io.Serializable;
-import java.util.Locale;
+
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.security.auth.login.LoginContext;
+import javax.security.auth.login.LoginException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
+import java.util.Locale;
 
 /**
- *
  * @author Jirka
  */
-@SessionScoped
+@RequestScoped
 @Named("loginBB")
-public class loginBB implements Serializable{
+public class loginBB implements Serializable {
 
+    @SessionScoped
     String username;
+    @SessionScoped
     String role;
+    @SessionScoped
     String lang;
     long id;
+    private String logOut;
+
     @Inject
-    protected UserServiceImpl userService;
+    UserServiceImpl userService;
+
 
     public String getUsername() {
-//        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (user instanceof UserDetails) {
-//            this.username = ((UserDetails) user).getUsername();
-//            //fing user id by username
-//        }
-//        return username;
-        return "admin";
+        this.username = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        return this.username;
     }
 
     public String getRole() {
+        if (this.getUsername() == null) {
+            return null;
+        }
         if (role == null) {
 
             UserDto user = userService.getUserByUsername(this.getUsername());
@@ -50,6 +63,7 @@ public class loginBB implements Serializable{
     }
 
     public void setRole(String role) {
+
         UserDto user = userService.getUserByUsername(this.getUsername());
         Role roletemp = user.getRole();
         String strRole = roletemp.name();
@@ -57,12 +71,15 @@ public class loginBB implements Serializable{
     }
 
     public long getId() {
+
+        userService = new UserServiceImpl();
         UserDto user = userService.getUserByUsername(this.getUsername());
         this.id = user.getId();
         return this.id;
     }
 
     public void setId(long id) {
+
         UserDto user = userService.getUserByUsername(this.getUsername());
         long idtemp = user.getId();
         this.id = idtemp;
@@ -88,4 +105,5 @@ public class loginBB implements Serializable{
         return "/";
         //return null;
     }
+
 }

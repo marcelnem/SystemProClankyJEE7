@@ -11,7 +11,7 @@ import java.security.MessageDigest;
  *
  * @author mickapa1
  */
-public class SHA1Provider implements HashProvider {
+public class SHA1Provider   {
 
     private static String convertToHex(byte[] data) {
         StringBuilder builder = new StringBuilder();
@@ -30,8 +30,7 @@ public class SHA1Provider implements HashProvider {
         return builder.toString();
     }
 
-    @Override
-    public String computeHash(String s) {
+    public static String computeHash(String s) {
         MessageDigest md = null;
         byte[] sha1hash = null;
         try {

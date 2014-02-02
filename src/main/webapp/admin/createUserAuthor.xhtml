@@ -1,26 +1,47 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-        <title>Vytvoření autora</title>
-    </h:head>
-    <h:body>
-        <ui:include src="/WEB-INF/include.xhtml" />
-        
-  <h1>Vytvoření autora</h1>       
-<h:form>
-Křestní jméno<h:inputText value="#{userAuthorBB.firstName}"/><br/>
-Příjmení<h:inputText value="#{userAuthorBB.lastName}"/><br/>
-Username<h:inputText value="#{userAuthorBB.username}"/><br/>
-Password<h:inputSecret value="#{userAuthorBB.password}"/><br/>
+<h:head>
+    <title>Vytvoření autora</title>
+</h:head>
+<h:body>
+    <ui:include src="/WEB-INF/include.xhtml"/>
 
-<h:commandButton value="create" action="#{userAuthorBB.saveUser()}"/><br/>
-<h:messages showDetail="true"/>
-</h:form>
+    <div>
 
-        
-    </h:body>
+        <h1>Vytvoření autora</h1>
+        <h:form class="form-horizontal span8">
+            <table>
+                <tr>
+                    <td>Křestní jméno</td>
+                    <td><h:inputText value="#{userAdvisoryBoardMemberBB.firstName}"/></td>
+                </tr>
+                <tr>
+                    <td>Příjmení</td>
+                    <td><h:inputText value="#{userAdvisoryBoardMemberBB.lastName}"/></td>
+                </tr>
+                <tr>
+                    <td>Username</td>
+                    <td><h:inputText value="#{userAdvisoryBoardMemberBB.username}"/></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><h:inputSecret value="#{userAdvisoryBoardMemberBB.password}"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><h:commandButton value="create" action="#{userAuthorBB.saveUser()}"/><br/>
+                    </td>
+
+                </tr>
+            </table>
+
+            <h:messages showDetail="true"/>
+        </h:form>
+    </div>
+
+</h:body>
 </html>
 

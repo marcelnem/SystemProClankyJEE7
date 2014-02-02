@@ -45,13 +45,7 @@ public class User extends DomainEntity {
         this.salt = salt;
     }
 
-    public HashProvider getHashProvider() {
-        return hashProvider;
-    }
 
-    public void setHashProvider(HashProvider hashProvider) {
-        this.hashProvider = hashProvider;
-    }
 
     public String getUsername() {
         return username;
@@ -66,9 +60,10 @@ public class User extends DomainEntity {
     }
 
     public void setPassword(String password) {
-        //this.password = password;
-        this.salt = hashProvider.computeHash(System.nanoTime() + "");
-        this.password = hashProvider.computeHash(password + salt);
+        this.password = password;
+        this.salt="";
+//        this.salt = hashProvider.computeHash(System.nanoTime() + "");
+//        this.password = hashProvider.computeHash(password + salt);
     }
     /*
      public Boolean getAdvisoryBoard() {

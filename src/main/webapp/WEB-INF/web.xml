@@ -4,6 +4,76 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
+    <!--***************************Security START****************************-->    
+
+    <security-role>
+        <role-name>ROLE_ADMIN</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ROLE_AUTHOR</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ROLE_CORRECTOR</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ROLE_BOARD_MEMBER</role-name>
+    </security-role>
+
+    <security-constraint>
+        <display-name>admin</display-name>
+        <web-resource-collection>
+            <web-resource-name>admin_pages</web-resource-name>
+            <url-pattern>/login/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
+
+    <security-constraint>
+        <display-name>admin</display-name>
+        <web-resource-collection>
+            <web-resource-name>admin_pages</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>For admin role only</description>
+            <role-name>ROLE_ADMIN</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    
+    <security-constraint>
+        <display-name>all_users</display-name>
+        <web-resource-collection>
+            <web-resource-name>users</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>anyone</description>
+            <role-name>ROLE_BOARD_MEMBER</role-name>
+            <role-name>ROLE_CORRECTOR</role-name>
+            <role-name>ROLE_AUTHOR</role-name>
+            <role-name>ROLE_ADMIN</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+
+        
+       
+   
+    
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login/login.jsp</form-login-page>
+            <form-error-page>/login/loginfail.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+
+
+    
+    
+    <!--***************************Security END***************************-->
+
         
              
              

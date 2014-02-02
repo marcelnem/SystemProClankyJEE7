@@ -4,6 +4,9 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:outputStylesheet library="css" name="loginbar.css"  />
+    <h:outputStylesheet library="css" name="bootstrap.min.css"  />
+    <h:outputScript library="js" name="bootstrap.min.js"/>
+
     <f:loadBundle basename="eu.cvut.fel.systemproclanky3.pres.inter.system" var="msg" />
 
         <div class="loginBar">
@@ -38,19 +41,19 @@
             <h:panelGroup rendered="#{loginBB.role=='ROLE_AUTHENTICATED'}"> <div></div></h:panelGroup>
 
             <div class="loggedInUser">#{msg['logged.user']} #{loginBB.username}</div>
-            <div class="language"><h:outputText value="#{msg['lang.choose']}" />
+            <!--<div class="language"><h:outputText value="#{msg['lang.choose']}" />-->
 
-                <h:form>
-                    <h:commandLink action="#{loginBB.changeLang('cs')}" immediate="true" value="">
-                        <h:graphicImage value="/resources/images/cz.png" style="vertical-align:middle"/>
-                    </h:commandLink>
-                    <h:commandLink action="#{loginBB.changeLang('en')}" immediate="true" value="">
-                        <h:graphicImage value="/resources/images/en.png" style="vertical-align:middle"/>
-                    </h:commandLink>
-                </h:form>
-            </div>
+                <!--<h:form>-->
+                    <!--<h:commandLink action="#{loginBB.changeLang('cs')}" immediate="true" value="">-->
+                        <!--<h:graphicImage value="/resources/images/cz.png" style="vertical-align:middle"/>-->
+                    <!--</h:commandLink>-->
+                    <!--<h:commandLink action="#{loginBB.changeLang('en')}" immediate="true" value="">-->
+                        <!--<h:graphicImage value="/resources/images/en.png" style="vertical-align:middle"/>-->
+                    <!--</h:commandLink>-->
+                <!--</h:form>-->
+            <!--</div>-->
             <div class="logout">
-                <h:outputLink value="${request.contextPath}/static/j_spring_security_logout">
+                <h:outputLink value="${request.contextPath}/logout">
                     <h:graphicImage value="/resources/images/logout.png" style="vertical-align:middle"/>logout
                 </h:outputLink>
             </div>
