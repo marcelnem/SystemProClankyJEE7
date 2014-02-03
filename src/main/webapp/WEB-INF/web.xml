@@ -19,14 +19,7 @@
         <role-name>ROLE_BOARD_MEMBER</role-name>
     </security-role>
 
-    <security-constraint>
-        <display-name>admin</display-name>
-        <web-resource-collection>
-            <web-resource-name>admin_pages</web-resource-name>
-            <url-pattern>/login/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint/>
-    </security-constraint>
+    
 
     <security-constraint>
         <display-name>admin</display-name>
