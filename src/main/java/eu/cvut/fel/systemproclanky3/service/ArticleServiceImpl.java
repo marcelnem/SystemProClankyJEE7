@@ -36,7 +36,9 @@ public class ArticleServiceImpl extends AbstractDataAccessService {
     @Transactional
     //@PreAuthorize("hasRole('ROLE_AUTHOR')")
     public Long addArticle(String pathOfFile, String name, Boolean priority, List<Long> authorIDs) {
+        System.out.println("aaaabb"+ pathOfFile + name+ priority+ authorIDs);
         Article article = new Article();
+        genericDao.saveOrUpdate(article);
         article.setName(name);
         article.setStatus(Status.entrance_notGranted);
         Version firstVersion = new Version();

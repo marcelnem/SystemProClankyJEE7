@@ -79,7 +79,7 @@ public class ArticleDetailBB {
         articleService.deleteArticleVersion(selectedVersion.getId());
         init();
         setMessage("***Article version removed***");
-        return "/detailArticle";
+        return "/system/detailArticle";
         //FacesUtil.addMessage("User was sucessfully deleted");
     }
 
@@ -142,7 +142,7 @@ public class ArticleDetailBB {
     public String markAsCorrected() {
         articleService.markArticleAsCorrected(articleIdLong);
         init();
-        return "/detailArticle";
+        return "/system/detailArticle";
     }
 
     public String getArticleId() {

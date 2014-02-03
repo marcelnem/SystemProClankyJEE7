@@ -6,6 +6,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import org.hibernate.Session;
 
@@ -19,8 +20,11 @@ import org.hibernate.Session;
 @ApplicationScoped
 public class GenericHibernateJpaDao implements GenericDao {
 
-    @PersistenceUnit(name = "eu.cvut.fel_systemproclanky3_war_1.0-SNAPSHOTPU")
-    protected EntityManagerFactory entityManagerfactory;
+//    @PersistenceUnit(name = "eu.cvut.fel_systemproclanky3_war_1.0-SNAPSHOTPU")
+//    protected EntityManagerFactory entityManagerfactory;
+
+    @PersistenceContext
+    EntityManager em;
 
     /**
      * Get entity manager for the current transaction
@@ -29,7 +33,7 @@ public class GenericHibernateJpaDao implements GenericDao {
      */
     protected EntityManager getEntityManager() {
 //        return EntityManagerFactoryUtils.getTransactionalEntityManager(entityManagerfactory); //entity manager with @Transactional support
-        return entityManagerfactory.createEntityManager();
+        return em;
     }
 
     /**

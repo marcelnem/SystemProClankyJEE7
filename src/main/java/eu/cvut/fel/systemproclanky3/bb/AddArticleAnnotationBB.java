@@ -74,7 +74,7 @@ public class AddArticleAnnotationBB {
         articleDetailBB.setMessage("***Article annotation adding not supported now***");
         articleDetailBB.setArticleId(articleId);
         articleDetailBB.init();
-        return "/detailArticle";
+        return "/system/detailArticle";
     }
 
     public ArticleServiceImpl getArticleService() {

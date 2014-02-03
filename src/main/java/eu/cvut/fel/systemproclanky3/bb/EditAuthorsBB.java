@@ -74,7 +74,7 @@ public class EditAuthorsBB {
         AuthorDto selectedAuthor = authorDtos.getRowData();
         articleService.removeAuthorFromArticle(articleIdLong, selectedAuthor.getId());
         init();
-        return "/editAuthors";
+        return "/system/editAuthors";
         //FacesUtil.addMessage("User was sucessfully deleted");
     }
 
@@ -137,6 +137,6 @@ public class EditAuthorsBB {
         }
         init();
 
-        return "/editAuthors";
+        return "/system/editAuthors";
     }
 }

@@ -88,7 +88,7 @@ public class AddArticleVersionBB {
 //        articleDetailBB.setArticleId(articleId);
 //        articleDetailBB.init();
         articleDetailBB.setMessage("***Article version adding not supported now***");
-        return "/detailArticle";
+        return "/system/detailArticle";
     }
 
     public ArticleServiceImpl getArticleService() {

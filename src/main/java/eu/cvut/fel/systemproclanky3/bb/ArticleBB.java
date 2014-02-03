@@ -9,8 +9,10 @@ import eu.cvut.fel.systemproclanky3.bo.Status;
 import eu.cvut.fel.systemproclanky3.dto.*;
 import eu.cvut.fel.systemproclanky3.service.ArticleServiceImpl;
 import eu.cvut.fel.systemproclanky3.service.UserServiceImpl;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.ExternalContext;
@@ -31,7 +33,7 @@ import org.apache.commons.io.FilenameUtils;
 /**
  * @author Jirka
  */
-@RequestScoped
+@ApplicationScoped
 @Named
 public class ArticleBB {
 
@@ -81,11 +83,14 @@ public class ArticleBB {
         List<Long> userIds = null;
         //getting user ID
         String username = loginBB.getUsername();
+        System.out.println("******aaaaabb"+username);
         if (username != null) {
             UserDto udto = userServiceImpl.getUserByUsername(username);
             if (udto.getRole() == Role.ROLE_AUTHOR) {
                 userIds = new ArrayList<Long>();
                 userIds.add(udto.getId());
+                System.out.println("******aaaaabb"+userIds);
+
             }
         }
 
@@ -111,7 +116,7 @@ public class ArticleBB {
             }
             File save = File.createTempFile("article", "." + suffix, LOCATION);
 //            System.out.println("save" + save.getAbsolutePath());
-            Files.write(save.toPath(), file.getContents());
+            Files.write(save.toPath(), IOUtils.toByteArray(file.getInputstream()));
             // Add success message here.
             File nameFile = new File(save.getAbsolutePath());
             String nameFileStr = nameFile.getName();
@@ -123,7 +128,7 @@ public class ArticleBB {
         }
         //add status
         message = "***Article added***";
-        return "/index";
+        return "/system/index";
     }
 
     public ArticleServiceImpl getArticleService() {

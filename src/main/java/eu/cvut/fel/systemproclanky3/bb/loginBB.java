@@ -101,7 +101,7 @@ public class loginBB implements Serializable {
         } else {
             FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale("cs"));
         }
-        return "/";
+        return "/system/";
         //return null;
     }
 
