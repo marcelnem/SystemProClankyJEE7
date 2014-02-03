@@ -39,7 +39,6 @@ public class loginBB implements Serializable {
     String lang;
     long id;
     private String logOut;
-
     @Inject
     UserServiceImpl userService;
 

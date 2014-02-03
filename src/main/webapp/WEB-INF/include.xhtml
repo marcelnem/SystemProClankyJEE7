@@ -18,13 +18,13 @@
                     <h:link outcome="/admin/createUserAdvisoryBoardMember" value="#{msg['create.advisoryBoardMember.user']}"/><h:outputText value="  |  "/>
                     <h:link outcome="/admin/createUserAuthor" value="#{msg['create.author.user']}"/><h:outputText value="  |  "/>
                     <h:link outcome="/admin/createUserCorrector" value="#{msg['create.corrector.user']}"/><h:outputText value="  |  "/>
-                    <h:link outcome="/index" value="#{msg['home.home']}"/><h:outputText value="  |  "/>
+                    <h:link outcome="/system/index" value="#{msg['home.home']}"/><h:outputText value="  |  "/>
 
                 </div>
             </h:panelGroup>
             <h:panelGroup rendered="#{loginBB.role=='ROLE_AUTHOR'}"> 
                 <div>            
-                    <h:link outcome="/createArticle" value="#{msg['create.article']}"/><h:outputText value="  |  "/>
+                    <h:link outcome="/system/createArticle" value="#{msg['create.article']}"/><h:outputText value="  |  "/>
                     <h:link outcome="/index" value="#{msg['list.onw.articles']}"/><h:outputText value="  |  "/>
                 </div>
             </h:panelGroup>

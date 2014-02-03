@@ -4,32 +4,38 @@
  */
 package eu.cvut.fel.systemproclanky3.bb;
 
+import eu.cvut.fel.systemproclanky3.bo.Role;
 import eu.cvut.fel.systemproclanky3.bo.Status;
-import eu.cvut.fel.systemproclanky3.dto.ArticleDto;
-import eu.cvut.fel.systemproclanky3.dto.AuthorDto;
-import eu.cvut.fel.systemproclanky3.dto.CorrectorDto;
-import eu.cvut.fel.systemproclanky3.dto.VersionDto;
+import eu.cvut.fel.systemproclanky3.dto.*;
 import eu.cvut.fel.systemproclanky3.service.ArticleServiceImpl;
 import eu.cvut.fel.systemproclanky3.service.UserServiceImpl;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import org.primefaces.model.UploadedFile;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.html.HtmlDataTable;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.model.UploadedFile;
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.io.FilenameUtils;
+
 
 /**
- *
  * @author Jirka
  */
-@RequestScoped @Named
+@RequestScoped
+@Named
 public class ArticleBB {
 
-//@ManagedProperty(name="articleService", value="#{articleService}" )
+    //@ManagedProperty(name="articleService", value="#{articleService}" )
     @Inject
     protected ArticleServiceImpl articleService;
     @Inject
@@ -43,6 +49,8 @@ public class ArticleBB {
     String pathOfFile;
     private HtmlDataTable datatableArticles;
     protected String message;
+    @Inject
+    loginBB loginBB;
 
     public String getMessage() {
         return message;
@@ -51,7 +59,7 @@ public class ArticleBB {
     public void setMessage(String message) {
         this.message = message;
     }
-    
+
 
     public HtmlDataTable getDatatableArticles() {
         return datatableArticles;
@@ -69,55 +77,52 @@ public class ArticleBB {
 // action
 
     public String saveArticle() throws IOException {
-//        //get id of Author that is logged in
-//        List<Long> userIds = null;
-//        //getting user ID
-//        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (user instanceof UserDetails) {
-//            String username = ((UserDetails) user).getUsername();
-//            UserDto udto = userServiceImpl.getUserByUsername(username);
-//            if (udto.getRole() == Role.ROLE_AUTHOR) {
-//                userIds = new ArrayList<Long>();
-//                userIds.add(udto.getId());
-//            }
-//        }
-//
-//
-//
-//        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-//        String relativeWebPath = "\\resources\\files\\";//"C:\\wpauploads\\"
-//        ServletContext servletContext = (ServletContext) externalContext.getContext();
-//        String absoluteDiskPath = servletContext.getRealPath(relativeWebPath);
-//        LOCATION = new File(absoluteDiskPath);
-//
-//
-//        /*  String filename = file.getFileName().toString();
-//         InputStream input = file.getInputstream();
-//         OutputStream output = new FileOutputStream(new File("/path/to/uploads", filename));
-//         */
-//        if (file != null) {
-//            String prefix = FilenameUtils.getBaseName(file.getFileName());
-//            String suffix = FilenameUtils.getExtension(file.getFileName());
-////            System.out.println("Location" + LOCATION.getAbsolutePath());
-//            if (!LOCATION.exists()) {
-////                System.out.println("creating directory");
-//                LOCATION.mkdir();
-//            }
-//            File save = File.createTempFile("article", "." + suffix, LOCATION);
-////            System.out.println("save" + save.getAbsolutePath());
-//            Files.write(save.toPath(), file.getContents());
-//            // Add success message here.
-//            File nameFile = new File(save.getAbsolutePath());
-//            String nameFileStr = nameFile.getName();
-//            articleService.addArticle(nameFileStr, name, priority, userIds);
-//
-//        } else {
-//            //inserting to database
-//            articleService.addArticle(null, name, priority, userIds);
-//        }
+        //get id of Author that is logged in
+        List<Long> userIds = null;
+        //getting user ID
+        String username = loginBB.getUsername();
+        if (username != null) {
+            UserDto udto = userServiceImpl.getUserByUsername(username);
+            if (udto.getRole() == Role.ROLE_AUTHOR) {
+                userIds = new ArrayList<Long>();
+                userIds.add(udto.getId());
+            }
+        }
+
+
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        String relativeWebPath = "\\resources\\files\\";//"C:\\wpauploads\\"
+        ServletContext servletContext = (ServletContext) externalContext.getContext();
+        String absoluteDiskPath = servletContext.getRealPath(relativeWebPath);
+        LOCATION = new File(absoluteDiskPath);
+
+
+        /*  String filename = file.getFileName().toString();
+         InputStream input = file.getInputstream();
+         OutputStream output = new FileOutputStream(new File("/path/to/uploads", filename));
+         */
+        if (file != null) {
+            String prefix = FilenameUtils.getBaseName(file.getFileName());
+            String suffix = FilenameUtils.getExtension(file.getFileName());
+//            System.out.println("Location" + LOCATION.getAbsolutePath());
+            if (!LOCATION.exists()) {
+//                System.out.println("creating directory");
+                LOCATION.mkdir();
+            }
+            File save = File.createTempFile("article", "." + suffix, LOCATION);
+//            System.out.println("save" + save.getAbsolutePath());
+            Files.write(save.toPath(), file.getContents());
+            // Add success message here.
+            File nameFile = new File(save.getAbsolutePath());
+            String nameFileStr = nameFile.getName();
+            articleService.addArticle(nameFileStr, name, priority, userIds);
+
+        } else {
+            //inserting to database
+            articleService.addArticle(null, name, priority, userIds);
+        }
         //add status
-//        message="***Article added***";
-        message="***Article adding not supported now***";
+        message = "***Article added***";
         return "/index";
     }
 
@@ -197,12 +202,11 @@ public class ArticleBB {
 
     public void setPathOfFile(long id) {
         List<VersionDto> list = articleService.getAllVersionsOfArticle(id);
-        if(list!= null && !list.isEmpty()){
-        VersionDto v = list.get(0);
-        this.pathOfFile = v.getPathOfFile();
-        }
-        else{
-        this.message="No version of article available";
+        if (list != null && !list.isEmpty()) {
+            VersionDto v = list.get(0);
+            this.pathOfFile = v.getPathOfFile();
+        } else {
+            this.message = "No version of article available";
         }
     }
 
