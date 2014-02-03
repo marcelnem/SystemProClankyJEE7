@@ -24,17 +24,17 @@
             <h:panelGroup rendered="#{loginBB.role=='ROLE_AUTHOR'}"> 
                 <div>            
                     <h:link outcome="/system/createArticle" value="#{msg['create.article']}"/><h:outputText value="  |  "/>
-                    <h:link outcome="/index" value="#{msg['list.onw.articles']}"/><h:outputText value="  |  "/>
+                    <h:link outcome="/system/index" value="#{msg['list.onw.articles']}"/><h:outputText value="  |  "/>
                 </div>
             </h:panelGroup>
             <h:panelGroup rendered="#{loginBB.role=='ROLE_CORRECTOR'}"> 
                 <div>
-                    <h:link outcome="/index" value="#{msg['list.assigned.articles']}"/><h:outputText value="  |  "/>
+                    <h:link outcome="/system/index" value="#{msg['list.assigned.articles']}"/><h:outputText value="  |  "/>
                 </div>
             </h:panelGroup>
             <h:panelGroup rendered="#{loginBB.role=='ROLE_BOARD_MEMBER'}"> 
                 <div>
-                    <h:link outcome="/index" value="#{msg['list.articles']}"/><h:outputText value="  |  "/>
+                    <h:link outcome="/system/index" value="#{msg['list.articles']}"/><h:outputText value="  |  "/>
                 </div>
             </h:panelGroup>
             <h:panelGroup rendered="#{loginBB.role=='ROLE_AUTHENTICATED'}"> <div></div></h:panelGroup>

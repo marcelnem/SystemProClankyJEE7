@@ -19,20 +19,24 @@ import eu.cvut.fel.systemproclanky3.dto.UserDto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import javax.transaction.Transactional;
 
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 @ApplicationScoped
 @Transactional
+@Named
 public class UserServiceImpl extends AbstractDataAccessService {
     //addCorrector, add
     //CRUD ke vsem rolim
 
     public UserDto getUserByUsername(String username) {
+        System.out.println("abab genericDao " +genericDao );
+        System.out.println("abab username " +username );
         User a = genericDao.getByPropertyUnique("username", username, User.class);
         UserDto dto = DtoFactory.getDto(a);
         return dto;

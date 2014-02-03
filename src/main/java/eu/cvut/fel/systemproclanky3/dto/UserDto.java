@@ -8,7 +8,7 @@ import eu.cvut.fel.systemproclanky3.bo.Role;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 public class UserDto extends AbstractDto {
 

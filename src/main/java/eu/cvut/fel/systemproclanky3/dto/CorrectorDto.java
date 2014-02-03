@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 public class CorrectorDto extends PersonAbstractDto {
 

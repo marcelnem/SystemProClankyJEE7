@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 @Entity
 public class Annotation extends DomainEntity {

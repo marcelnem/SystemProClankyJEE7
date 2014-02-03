@@ -6,7 +6,7 @@ package eu.cvut.fel.systemproclanky3.bo;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 public enum Status {
 

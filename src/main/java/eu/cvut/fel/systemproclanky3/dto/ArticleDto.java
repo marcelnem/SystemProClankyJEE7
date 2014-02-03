@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 public class ArticleDto extends AbstractDto {
 

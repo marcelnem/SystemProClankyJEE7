@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 @Entity
 @DiscriminatorValue("CO")

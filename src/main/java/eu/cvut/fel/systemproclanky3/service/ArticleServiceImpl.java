@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import javax.transaction.Transactional;
 
 /**
@@ -29,7 +30,7 @@ import javax.transaction.Transactional;
  * @author marcel
  */
 @ApplicationScoped
-
+@Named
 @Transactional
 public class ArticleServiceImpl extends AbstractDataAccessService {
 

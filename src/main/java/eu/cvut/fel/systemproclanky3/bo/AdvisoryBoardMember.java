@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 @Entity
 public class AdvisoryBoardMember extends Person {

@@ -31,7 +31,7 @@ import org.apache.commons.io.FilenameUtils;
 
 
 /**
- * @author Jirka
+ * @author Marcel
  */
 @ApplicationScoped
 @Named

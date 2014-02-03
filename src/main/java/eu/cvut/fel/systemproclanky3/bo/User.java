@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

@@ -7,7 +7,7 @@ import org.primefaces.model.UploadedFile;
   
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 public class FileUploadController {
     private UploadedFile file;  

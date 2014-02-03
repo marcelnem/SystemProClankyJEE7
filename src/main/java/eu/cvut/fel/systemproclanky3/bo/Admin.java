@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 @Entity
 @DiscriminatorValue("AD")

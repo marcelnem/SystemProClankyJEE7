@@ -28,7 +28,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 @RequestScoped @Named
 public class ArticleDetailBB {

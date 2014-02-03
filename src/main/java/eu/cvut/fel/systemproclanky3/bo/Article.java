@@ -20,7 +20,7 @@ import javax.persistence.OrderBy;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 @Entity
 @DiscriminatorValue("AR")

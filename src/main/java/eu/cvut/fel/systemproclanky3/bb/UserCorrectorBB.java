@@ -10,7 +10,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 
 @javax.enterprise.context.RequestScoped

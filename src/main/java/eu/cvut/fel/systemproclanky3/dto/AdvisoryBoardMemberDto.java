@@ -6,7 +6,7 @@ package eu.cvut.fel.systemproclanky3.dto;
 
 /**
  *
- * @author Jirka
+ * @author Marcel
  */
 public class AdvisoryBoardMemberDto extends PersonAbstractDto {
 

@@ -5,12 +5,17 @@
 package eu.cvut.fel.systemproclanky3.service;
 
 import eu.cvut.fel.systemproclanky3.dao.GenericDao;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author mickapa1
  */
+@ApplicationScoped
+@Named
 public abstract class AbstractDataAccessService {
     @Inject
     protected GenericDao genericDao;

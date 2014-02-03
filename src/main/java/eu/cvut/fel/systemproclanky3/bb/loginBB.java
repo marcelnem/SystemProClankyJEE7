@@ -10,6 +10,7 @@ import eu.cvut.fel.systemproclanky3.service.UserServiceImpl;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -25,9 +26,9 @@ import java.io.Serializable;
 import java.util.Locale;
 
 /**
- * @author Jirka
+ * @author Marcel
  */
-@RequestScoped
+@SessionScoped
 @Named("loginBB")
 public class loginBB implements Serializable {
 
