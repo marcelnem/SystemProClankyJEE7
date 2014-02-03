@@ -38,7 +38,7 @@
                     <h:link outcome="/admin/createUserCorrector" value="#{msg['create.corrector.user']}"/><br/>
                 </c:if>
                 <br/>
-                <h:dataTable style="border:1px gray solid;" value="#{articleServiceImpl.allArticles}" var="item" rendered="#{loginBB.role=='ROLE_BOARD_MEMBER'}" binding="#{articleBB.datatableArticles}" >
+                <h:dataTable style="border:1px gray solid;" value="#{articleListBB.allArticles}" var="item" rendered="#{loginBB.role=='ROLE_BOARD_MEMBER'}" binding="#{articleBB.datatableArticles}" >
                     <h:column>
                         <f:facet name="header">Id</f:facet>
                             #{item.id}
@@ -46,7 +46,7 @@
                     <h:column>
                         <f:facet name="header">#{msg['index.name']}</f:facet>
 
-                        <h:link outcome="/detailArticle" value="#{item.name}">
+                        <h:link outcome="/system/detailArticle" value="#{item.name}">
                             <f:param name="articleId" value="#{item.id}" />
                         </h:link>
 
@@ -97,14 +97,14 @@
 
                 </h:dataTable>
 
-                <h:dataTable style="border:1px gray solid;" value="#{articleListBB.getArticlesForAuthor(loginBB.id)}" var="item" rendered="#{loginBB.role=='ROLE_AUTHOR'}">
+                <h:dataTable style="border:1px gray solid;" value="#{articleListBB.getArticlesForAuthor()}" var="item" rendered="#{loginBB.role=='ROLE_AUTHOR'}">
                     <h:column>
                         <f:facet name="header">Id</f:facet>
                             #{item.id}
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{msg['index.name']}</f:facet>
-                        <h:link outcome="/detailArticle" value="#{item.name}"> 
+                        <h:link outcome="/system/detailArticle" value="#{item.name}"> 
                             <f:param name="articleId" value="#{item.id}" />   
                         </h:link>
                     </h:column>
@@ -138,14 +138,14 @@
                 </h:dataTable>
 
 
-                <h:dataTable style="border:1px gray solid;" value="#{articleListBB.getArticlesForCorrector(loginBB.id)}" var="item" rendered="#{loginBB.role=='ROLE_CORRECTOR'}">
+                <h:dataTable style="border:1px gray solid;" value="#{articleListBB.getArticlesForCorrector()}" var="item" rendered="#{loginBB.role=='ROLE_CORRECTOR'}">
                     <h:column>
                         <f:facet name="header">Id</f:facet>
                             #{item.id}
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{msg['index.name']}</f:facet>
-                        <h:link outcome="/detailArticle" value="#{item.name}"> 
+                        <h:link outcome="/system/detailArticle" value="#{item.name}"> 
                             <f:param name="articleId" value="#{item.id}" />   
                         </h:link>
                     </h:column>

@@ -33,7 +33,7 @@ import org.apache.commons.io.FilenameUtils;
 /**
  * @author Marcel
  */
-@ApplicationScoped
+@RequestScoped
 @Named
 public class ArticleBB {
 

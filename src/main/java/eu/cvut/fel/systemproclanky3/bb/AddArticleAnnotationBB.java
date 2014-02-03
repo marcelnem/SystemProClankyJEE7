@@ -33,6 +33,8 @@ public class AddArticleAnnotationBB {
     protected String annotationText;
     @Inject
     ArticleDetailBB articleDetailBB;
+    @Inject
+    loginBB loginBB;
 
     public String getAnnotationText() {
         return annotationText;
@@ -57,21 +59,15 @@ public class AddArticleAnnotationBB {
     }
 
     public String addAnnotation(String articleId) throws Exception {
-//        this.articleId = articleId;
-//        init();
-//        if (articleIdLong == null) {
-//            throw new Exception("missing article id");
-//        }
-//        Long userId = null;
-//        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (user instanceof UserDetails) {
-//            String username = ((UserDetails) user).getUsername();
-//            UserDto udto = userServiceImpl.getUserByUsername(username);
-//            userId = udto.getId();
-//        }
-//        articleService.addAnnotationToArticle(articleIdLong, userId, annotationText, null);
+        this.articleId = articleId;
+        init();
+        if (articleIdLong == null) {
+            throw new Exception("missing article id");
+        }
+        Long userId = null;
+        articleService.addAnnotationToArticle(articleIdLong, loginBB.getId(), annotationText, null);
 
-        articleDetailBB.setMessage("***Article annotation adding not supported now***");
+        articleDetailBB.setMessage("***Annotation added***");
         articleDetailBB.setArticleId(articleId);
         articleDetailBB.init();
         return "/system/detailArticle";

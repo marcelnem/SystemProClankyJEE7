@@ -28,15 +28,12 @@ import java.util.Locale;
 /**
  * @author Marcel
  */
-@SessionScoped
+@RequestScoped
 @Named("loginBB")
 public class loginBB implements Serializable {
 
-    @SessionScoped
     String username;
-    @SessionScoped
     String role;
-    @SessionScoped
     String lang;
     long id;
     private String logOut;
@@ -71,8 +68,6 @@ public class loginBB implements Serializable {
     }
 
     public long getId() {
-
-        userService = new UserServiceImpl();
         UserDto user = userService.getUserByUsername(this.getUsername());
         this.id = user.getId();
         return this.id;

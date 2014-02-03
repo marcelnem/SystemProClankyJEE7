@@ -9,7 +9,7 @@
     <h:head>
         <title>#{msg['article']}: #{articleDetailBB.name}</title>
     </h:head>
-    <h:body>    <f:view locale="#{loginBB.lang}">
+    <h:body>    <f:view >
 
             <ui:include src="/WEB-INF/include.xhtml" />
             <div class="articleDetailBody">
@@ -21,7 +21,7 @@
 
                     Authors: #{articleDetailBB.authors}
                     <br/>
-                    <h:link value="Edit authors" outcome="/editAuthors">
+                    <h:link value="Edit authors" outcome="/system/editAuthors">
                         <f:param name="articleId" value="#{articleDetailBB.articleId}">
                         </f:param>
                     </h:link>  
@@ -65,7 +65,7 @@
                     </c:if>
 
                     <c:if test="${loginBB.role=='ROLE_AUTHOR'}">
-                        <h:link outcome="/addArticleVersion" value="#{msg['addArticleVersion']}">
+                        <h:link outcome="/system/addArticleVersion" value="#{msg['addArticleVersion']}">
                             <f:param name="articleId" value="#{articleDetailBB.articleId}"></f:param>
                         </h:link>
                     </c:if>
@@ -89,7 +89,7 @@
 
                     <c:if test="${loginBB.role=='ROLE_AUTHOR' or loginBB.role=='ROLE_BOARD_MEMBER' or loginBB.role=='ROLE_CORRECTOR'}">
                         <br/>
-                        <h:link outcome="/addArticleAnnotation" value="#{msg['addArticleAnnotation']}">
+                        <h:link outcome="/system/addArticleAnnotation" value="#{msg['addArticleAnnotation']}">
                             <f:param name="articleId" value="#{articleDetailBB.articleId}"></f:param>
                         </h:link>
                     </c:if>
