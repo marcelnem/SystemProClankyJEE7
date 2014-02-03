@@ -6,20 +6,6 @@
          version="3.0">
     <!--***************************Security START****************************-->    
 
-    <security-role>
-        <role-name>ROLE_ADMIN</role-name>
-    </security-role>
-    <security-role>
-        <role-name>ROLE_AUTHOR</role-name>
-    </security-role>
-    <security-role>
-        <role-name>ROLE_CORRECTOR</role-name>
-    </security-role>
-    <security-role>
-        <role-name>ROLE_BOARD_MEMBER</role-name>
-    </security-role>
-
-    
 
     <security-constraint>
         <display-name>admin</display-name>
@@ -49,9 +35,18 @@
         </auth-constraint>
     </security-constraint>
 
-
-        
-       
+    <security-role>
+        <role-name>ROLE_ADMIN</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ROLE_AUTHOR</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ROLE_CORRECTOR</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ROLE_BOARD_MEMBER</role-name>
+    </security-role>
    
     
     <login-config>
