@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.transaction.Transactional;
@@ -35,7 +36,7 @@ import javax.transaction.Transactional;
 public class ArticleServiceImpl extends AbstractDataAccessService {
 
     @Transactional
-    //@PreAuthorize("hasRole('ROLE_AUTHOR')")
+    @RolesAllowed({"ROLE_AUTHOR"})
     public Long addArticle(String pathOfFile, String name, Boolean priority, List<Long> authorIDs) {
         System.out.println("aaaabb"+ pathOfFile + name+ priority+ authorIDs);
         Article article = new Article();
@@ -67,7 +68,7 @@ public class ArticleServiceImpl extends AbstractDataAccessService {
     }
 
     @Transactional
-    //@PreAuthorize("hasRole('ROLE_BOARD_MEMBER') or hasRole('ROLE_AUTHOR')")
+    @RolesAllowed({"ROLE_AUTHOR","ROLE_BOARD_MEMBER"})
     public void addAuthorToArticle(Long articleID, Long authorID) {
         Article article = genericDao.getById(articleID, Article.class);
         Author author = genericDao.getById(authorID, Author.class);
@@ -78,7 +79,7 @@ public class ArticleServiceImpl extends AbstractDataAccessService {
     }
 
     @Transactional
-    //@PreAuthorize("hasRole('ROLE_AUTHOR') or hasRole('ROLE_BOARD_MEMBER')")
+    @RolesAllowed({"ROLE_AUTHOR","ROLE_BOARD_MEMBER"})
     public void removeAuthorFromArticle(Long articleID, Long authorID) {
         Article article = genericDao.getById(articleID, Article.class);
         Author author = genericDao.getById(authorID, Author.class);
@@ -89,7 +90,7 @@ public class ArticleServiceImpl extends AbstractDataAccessService {
     }
 
     @Transactional
-    //@PreAuthorize("hasRole('ROLE_AUTHOR')")
+    @RolesAllowed({"ROLE_AUTHOR"})
     public void addVersionOfArticle(Long articleID, String pathOfFile) {
         Article a = genericDao.getById(articleID, Article.class);
         Version v = new Version();
@@ -102,7 +103,7 @@ public class ArticleServiceImpl extends AbstractDataAccessService {
 
     }
 
-    //@PreAuthorize("hasRole('ROLE_BOARD_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_CORRECTOR')")
+    @RolesAllowed({"ROLE_AUTHOR","ROLE_BOARD_MEMBER","ROLE_CORRECTOR"})
     public Long addAnnotationToArticle(Long articleID, Long authorOfAnnotationID, String annotationText, String PathOfFile) {
         Article a = genericDao.getById(articleID, Article.class);
         User u = genericDao.getById(authorOfAnnotationID, User.class);
@@ -116,24 +117,24 @@ public class ArticleServiceImpl extends AbstractDataAccessService {
         return an.getId();
     }
 
-    //@PreAuthorize("hasRole('ROLE_BOARD_MEMBER') or hasRole('ROLE_AUTHOR')")
+    @RolesAllowed({"ROLE_AUTHOR","ROLE_BOARD_MEMBER"})
     public void deleteArticle(long articleId) {
         genericDao.removeById(articleId, Article.class);
     }
 
-    //@PreAuthorize("hasRole('ROLE_AUTHOR') or hasRole('ROLE_BOARD_MEMBER') or hasRole('ROLE_AUTHOR')")
+    @RolesAllowed({"ROLE_AUTHOR","ROLE_BOARD_MEMBER"})
     public void deleteArticleVersion(long versionId) {
         genericDao.removeById(versionId, Version.class);
     }
 
-    //@PreAuthorize("hasRole('ROLE_BOARD_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_CORRECTOR')")
+    @RolesAllowed({"ROLE_AUTHOR","ROLE_BOARD_MEMBER","ROLE_CORRECTOR"})
     public ArticleDto getArticleById(Long id) {
         Article a = genericDao.getById(id, Article.class);
         ArticleDto dto = DtoFactory.getDto(a);
         return dto;
     }
 
-    //@PreAuthorize("hasRole('ROLE_BOARD_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_CORRECTOR')")
+    @RolesAllowed({"ROLE_AUTHOR","ROLE_BOARD_MEMBER","ROLE_CORRECTOR"})
     public VersionDto getNewestVersionOfArticle(Long articleID) {
         Article a = genericDao.getById(articleID, Article.class);
         if (!a.getVersions().isEmpty()) {
@@ -146,7 +147,7 @@ public class ArticleServiceImpl extends AbstractDataAccessService {
 
     }
 
-    //@PreAuthorize("hasRole('ROLE_BOARD_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_CORRECTOR')")
+    @RolesAllowed({"ROLE_AUTHOR","ROLE_BOARD_MEMBER","ROLE_CORRECTOR"})
     public List<VersionDto> getAllVersionsOfArticle(Long articleID) {
         Article a = genericDao.getById(articleID, Article.class);
         List<VersionDto> versionDtos = new ArrayList<VersionDto>();
@@ -159,7 +160,7 @@ public class ArticleServiceImpl extends AbstractDataAccessService {
         return versionDtos;
     }
 
-    //@PreAuthorize("hasRole('ROLE_BOARD_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_CORRECTOR')")
+    @RolesAllowed({"ROLE_AUTHOR","ROLE_BOARD_MEMBER","ROLE_CORRECTOR"})
     public List<ArticleDto> getAllArticles() {
         List<Article> articles = genericDao.getAll(Article.class);
         List<ArticleDto> articleDtos = new ArrayList<ArticleDto>();
@@ -171,7 +172,7 @@ public class ArticleServiceImpl extends AbstractDataAccessService {
         return articleDtos;
     }
 
-    //@PreAuthorize("hasRole('ROLE_CORRECTOR') or hasRole('ROLE_BOARD_MEMBER')")
+    @RolesAllowed({"ROLE_BOARD_MEMBER","ROLE_CORRECTOR"})
     public List<ArticleDto> getArticlesForCorrector(long correctorID) {
         List<Article> articles = genericDao.getByProperty("corrector.id", correctorID, Article.class);
         List<ArticleDto> articleDtos = new ArrayList<ArticleDto>();
