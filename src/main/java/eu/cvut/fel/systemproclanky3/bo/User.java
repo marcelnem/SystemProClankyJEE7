@@ -14,6 +14,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -26,8 +28,12 @@ import javax.persistence.Table;
 public class User extends DomainEntity {
 
     @Column(length = 100, nullable = false, unique = true)
+    @Size(max=100)
+    @NotNull
     String username;
     @Column(length = 40, nullable = false)
+    @Size(max=100)
+    @NotNull
     String password;
     //Variables may be marked transient to indicate that they are not part of the persistent state of an object.
     @Inject

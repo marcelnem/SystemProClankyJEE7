@@ -7,6 +7,7 @@ package eu.cvut.fel.systemproclanky3.bo;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -18,8 +19,10 @@ public class Annotation extends DomainEntity {
     @ManyToOne
     User authorOfAnnotation;
     @Column(length = 100, nullable = true)
+    @Size(max=100)
     String pathOfFile;
     @Column(length = 100, nullable = true)
+    @Size(max=100)
     String annotationText;
     @ManyToOne
     Article article;

@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -20,6 +22,7 @@ public class Version extends DomainEntity {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date datetime;
     @Column(length = 1024)
+    @Size(max=1024)
     String pathOfFile;
     @ManyToOne
     Article article;

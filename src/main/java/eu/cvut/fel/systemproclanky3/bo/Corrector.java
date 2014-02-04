@@ -4,6 +4,8 @@
  */
 package eu.cvut.fel.systemproclanky3.bo;
 
+import org.hibernate.validator.constraints.Email;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -18,7 +20,7 @@ import javax.persistence.OneToMany;
 @Entity
 @DiscriminatorValue("CO")
 public class Corrector extends Person {
-
+    @Email
     String email;
     @OneToMany(mappedBy = "corrector", cascade = CascadeType.ALL)
     private List<Article> articles;

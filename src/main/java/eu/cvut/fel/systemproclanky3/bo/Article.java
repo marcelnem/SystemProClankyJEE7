@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -30,6 +31,7 @@ import javax.persistence.OrderBy;
 public class Article extends DomainEntity {
 
     @Column(length = 128)
+    @Size(max=128)
     String name;
     @Column()
     Boolean priority;

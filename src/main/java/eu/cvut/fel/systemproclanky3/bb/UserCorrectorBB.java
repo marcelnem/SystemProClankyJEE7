@@ -5,8 +5,11 @@
 package eu.cvut.fel.systemproclanky3.bb;
 
 import eu.cvut.fel.systemproclanky3.service.UserServiceImpl;
+import org.hibernate.validator.constraints.Email;
+
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -22,8 +25,11 @@ public class UserCorrectorBB {
     protected UserServiceImpl userService;
     protected String firstName;
     protected String lastName;
+    @NotNull
     protected String username;
+    @NotNull
     protected String password;
+    @Email
     protected String email;
     //ROLE string
 

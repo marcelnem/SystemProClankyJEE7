@@ -6,6 +6,8 @@ package eu.cvut.fel.systemproclanky3.bo;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -16,8 +18,12 @@ import javax.persistence.MappedSuperclass;
 public abstract class Person extends User {
 
     @Column(length = 100, nullable = false)
+    @Size(max=100)
+            @NotNull
     String firstname;
     @Column(length = 100, nullable = false)
+    @Size(max=100)
+    @NotNull
     String lastname;
 
 
