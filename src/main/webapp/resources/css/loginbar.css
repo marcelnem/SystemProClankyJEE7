@@ -15,7 +15,7 @@ root {
 body{
     margin:0;
     font-family: sans-serif;
-    
+
 }
 
 
@@ -87,7 +87,7 @@ body > *{
 
 table td,th
 {
-       text-align: left;
+    text-align: left;
     padding: 8px 8px;
 }
 .applicationName{
@@ -102,5 +102,16 @@ table td,th
     color:green;
     /*display: block;*/
 
-    
+
+}
+
+.chat-wrapper{
+    right: 0px;
+    bottom: 0px;
+    border-left: 1px solid rgb(0, 0, 0);
+    top: 42px;
+    position: absolute;
+    overflow: auto;
+    font-size: 12px;
+    width: 300px;
 }

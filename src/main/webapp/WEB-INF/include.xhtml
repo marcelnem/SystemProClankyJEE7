@@ -1,62 +1,180 @@
-<ui:composition 
+<ui:composition
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:outputStylesheet library="css" name="loginbar.css"  />
+    <h:outputStylesheet library="css" name="loginbar.css"/>
+    <script src="${request.contextPath}/resources/js/jquery-1.11.0.min.js"></script>
+
+    <script type="text/javascript">
+        var wsocket;
+        var serviceLocation = "ws://localhost:8080${request.contextPath}/chat";
+        var $nickname;
+        var $message;
+        var $chatWindow;
+        var room = '';
+
+        var form;
+        var chat;
 
 
-    <f:loadBundle basename="eu.cvut.fel.systemproclanky3.pres.inter.system" var="msg" />
+        function processForm(e) {
+            if (e.preventDefault)
+                e.preventDefault();
 
-        <div class="loginBar">
-            <div class="applicationName"><h:graphicImage value="/resources/images/logo.png" style="vertical-align:middle"/>
-                <h:outputText value="#{msg['system.title']}" /></div>
-            <h:panelGroup rendered="#{loginBB.role=='ROLE_ADMIN'}"> 
-                <div>
-                    <h:link outcome="/admin/createUserAdmin" value="#{msg['create.admin.user']}"/><h:outputText value="  |  "/>
-                    <h:link outcome="/admin/createUserAdvisoryBoardMember" value="#{msg['create.advisoryBoardMember.user']}"/><h:outputText value="  |  "/>
-                    <h:link outcome="/admin/createUserAuthor" value="#{msg['create.author.user']}"/><h:outputText value="  |  "/>
-                    <h:link outcome="/admin/createUserCorrector" value="#{msg['create.corrector.user']}"/><h:outputText value="  |  "/>
-                    <h:link outcome="/system/index" value="#{msg['home.home']}"/><h:outputText value="  |  "/>
+            $nickname = document.getElementById('nickname').value;
+            return false;
+        }
 
-                </div>
-            </h:panelGroup>
-            <h:panelGroup rendered="#{loginBB.role=='ROLE_AUTHOR'}"> 
-                <div>            
-                    <h:link outcome="/system/createArticle" value="#{msg['create.article']}"/><h:outputText value="  |  "/>
-                    <h:link outcome="/system/index" value="#{msg['list.onw.articles']}"/><h:outputText value="  |  "/>
-                </div>
-            </h:panelGroup>
-            <h:panelGroup rendered="#{loginBB.role=='ROLE_CORRECTOR'}"> 
-                <div>
-                    <h:link outcome="/system/index" value="#{msg['list.assigned.articles']}"/><h:outputText value="  |  "/>
-                </div>
-            </h:panelGroup>
-            <h:panelGroup rendered="#{loginBB.role=='ROLE_BOARD_MEMBER'}"> 
-                <div>
-                    <h:link outcome="/system/index" value="#{msg['list.articles']}"/><h:outputText value="  |  "/>
-                </div>
-            </h:panelGroup>
-            <h:panelGroup rendered="#{loginBB.role=='ROLE_AUTHENTICATED'}"> <div></div></h:panelGroup>
 
-            <div class="loggedInUser">#{msg['logged.user']} #{loginBB.username}</div>
-            <!--<div class="language"><h:outputText value="#{msg['lang.choose']}" />-->
 
-                <!--<h:form>-->
-                    <!--<h:commandLink action="#{loginBB.changeLang('cs')}" immediate="true" value="">-->
-                        <!--<h:graphicImage value="/resources/images/cz.png" style="vertical-align:middle"/>-->
-                    <!--</h:commandLink>-->
-                    <!--<h:commandLink action="#{loginBB.changeLang('en')}" immediate="true" value="">-->
-                        <!--<h:graphicImage value="/resources/images/en.png" style="vertical-align:middle"/>-->
-                    <!--</h:commandLink>-->
-                <!--</h:form>-->
-            <!--</div>-->
-            <div class="logout">
-                <h:outputLink value="${request.contextPath}/logout">
-                    <h:graphicImage value="/resources/images/logout.png" style="vertical-align:middle"/>logout
-                </h:outputLink>
+        function onMessageReceived(evt) {
+            //var msg = eval('(' + evt.data + ')');
+            var msg = JSON.parse(evt.data); // native API
+            var $messageLine = $('<tr><td class="received">' + msg.received
+                    + '</td><td class="user label label-info">' + msg.sender
+                    + '</td><td class="message badge">' + msg.message
+                    + '</td></tr>');
+
+
+            var tableRef = $chatWindow;
+
+// Insert a row in the table at the last row
+            var newRow = tableRef.insertRow(tableRef.rows.length);
+
+// Insert a cell in the row at index 0
+            var newCell0 = newRow.insertCell(0);
+            var newCell1 = newRow.insertCell(1);
+            var newCell2 = newRow.insertCell(2);
+
+// Append a text node to the cell
+            var newText0 = document.createTextNode(msg.received);
+            newCell0.appendChild(newText0);
+            var newText1 = document.createTextNode(msg.sender);
+            newCell1.appendChild(newText1);
+            var newText2 = document.createTextNode(msg.message);
+            newCell2.appendChild(newText2);
+        }
+        function sendMessage(e) {
+            if (e.preventDefault)
+                e.preventDefault();
+            var msg = '{"message":"' + $message.value + '", "sender":"'
+                    + $nickname + '", "received":""}';
+            wsocket.send(msg);
+            return false;
+        }
+
+        function connectToChatserver() {
+            wsocket = new WebSocket(serviceLocation);
+            wsocket.onmessage = onMessageReceived;
+        }
+
+        function leaveRoom() {
+            wsocket.close();
+            $chatWindow.empty();
+            $('.chat-wrapper').hide();
+            $('.chat-signin').show();
+            $nickname.focus();
+        }
+
+        $(document).ready(function() {
+            $nickname = window.name;
+            chat = document.getElementById('do-chat');
+
+            $message = document.getElementById('message');
+            $chatWindow = document.getElementById('response');
+
+            if (chat.attachEvent) {
+                chat.attachEvent("submit", sendMessage);
+            } else {
+                chat.addEventListener("submit", sendMessage);
+            }
+
+            connectToChatserver();
+        });
+    </script>
+
+
+    <f:loadBundle basename="eu.cvut.fel.systemproclanky3.pres.inter.system" var="msg"/>
+
+    <div class="loginBar">
+        <div class="applicationName"><h:graphicImage value="/resources/images/logo.png" style="vertical-align:middle"/>
+            <h:outputText value="#{msg['system.title']}"/></div>
+        <h:panelGroup rendered="#{loginBB.role=='ROLE_ADMIN'}">
+            <div>
+                <h:link outcome="/admin/createUserAdmin" value="#{msg['create.admin.user']}"/><h:outputText
+                    value="  |  "/>
+                <h:link outcome="/admin/createUserAdvisoryBoardMember"
+                        value="#{msg['create.advisoryBoardMember.user']}"/><h:outputText value="  |  "/>
+                <h:link outcome="/admin/createUserAuthor" value="#{msg['create.author.user']}"/><h:outputText
+                    value="  |  "/>
+                <h:link outcome="/admin/createUserCorrector" value="#{msg['create.corrector.user']}"/><h:outputText
+                    value="  |  "/>
+                <h:link outcome="/system/index" value="#{msg['home.home']}"/><h:outputText value="  |  "/>
+
             </div>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{loginBB.role=='ROLE_AUTHOR'}">
+            <div>
+                <h:link outcome="/system/createArticle" value="#{msg['create.article']}"/><h:outputText value="  |  "/>
+                <h:link outcome="/system/index" value="#{msg['list.onw.articles']}"/><h:outputText value="  |  "/>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{loginBB.role=='ROLE_CORRECTOR'}">
+            <div>
+                <h:link outcome="/system/index" value="#{msg['list.assigned.articles']}"/><h:outputText value="  |  "/>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{loginBB.role=='ROLE_BOARD_MEMBER'}">
+            <div>
+                <h:link outcome="/system/index" value="#{msg['list.articles']}"/><h:outputText value="  |  "/>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{loginBB.role=='ROLE_AUTHENTICATED'}">
+            <div></div>
+        </h:panelGroup>
 
+        <div class="loggedInUser">#{msg['logged.user']} #{loginBB.username}</div>
+        <!--<div class="language"><h:outputText value="#{msg['lang.choose']}" />-->
+
+        <!--<h:form>-->
+        <!--<h:commandLink action="#{loginBB.changeLang('cs')}" immediate="true" value="">-->
+        <!--<h:graphicImage value="/resources/images/cz.png" style="vertical-align:middle"/>-->
+        <!--</h:commandLink>-->
+        <!--<h:commandLink action="#{loginBB.changeLang('en')}" immediate="true" value="">-->
+        <!--<h:graphicImage value="/resources/images/en.png" style="vertical-align:middle"/>-->
+        <!--</h:commandLink>-->
+        <!--</h:form>-->
+        <!--</div>-->
+        <div class="logout">
+            <h:outputLink value="${request.contextPath}/logout">
+                <h:graphicImage value="/resources/images/logout.png" style="vertical-align:middle"/>logout
+            </h:outputLink>
         </div>
+
+    </div>
+    <div>
+
+        <!-- /container -->
+
+        <div class="container chat-wrapper">
+            <form id="do-chat">
+                <h2 class="alert alert-success"></h2>
+                <table id="response" class="table table-bordered"></table>
+                <fieldset>
+                    <legend>Enter your message..</legend>
+                    <div class="controls">
+                        <input type="text" class="input-block-level" placeholder="Your message..." id="message"
+                               style="height:60px"/>
+                        <input type="submit" class="btn btn-large btn-block btn-primary"
+                               value="Send message"/>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+
+    </div>
+
 
 </ui:composition>
